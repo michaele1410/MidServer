@@ -43,7 +43,7 @@ COPY asset/init asset/.container asset/check_health.sh asset/post_start.sh asset
 
 
 # Install ARM64 Tanuki Wrapper and patch wrapper.conf
-RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.51/wrapper-linux-arm-64-3.5.51.tar.gz" && \
+RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.57/wrapper-linux-arm-64-3.5.57.tar.gz" && \
     echo "Downloading ARM64 wrapper from $WRAPPER_URL" && \
     wget -q -O /tmp/wrapper.tar.gz "$WRAPPER_URL" && \
     mkdir -p /tmp/wrapper && \
