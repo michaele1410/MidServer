@@ -98,7 +98,7 @@ RUN dnf update -y --security --bugfix && \
                     curl \
                     procps-ng \
                     diffutils \
-                    net-tools && \
+                    net-tools \
                     java-1.8.0-openjdk-headless && \
     dnf clean all -y && \
     rm -rf /tmp/*
