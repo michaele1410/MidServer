@@ -87,19 +87,21 @@ RUN chmod -R g=u /opt/snc_mid_server
 #     - Grant the execution permission for the scripts and binaries that do not have it
 # ########################################################################################################################
 
+
 FROM almalinux:9.2
 
-# Install security and bugfix updates, and then the required packages.
+# Security Updates + Pakete inkl. Java 11
 RUN dnf update -y --security --bugfix && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-    dnf install -y --allowerasing glibc-langpack-en \
-                    bind-utils \
-                    xmlstarlet \
-                    curl \
-                    procps-ng \
-                    diffutils \
-                    net-tools \
-                    java-1.8.0-openjdk-headless && \
+    dnf install -y --allowerasing \
+        glibc-langpack-en \
+        bind-utils \
+        xmlstarlet \
+        curl \
+        procps-ng \
+        diffutils \
+        net-tools \
+        java-11-openjdk-headless && \
     dnf clean all -y && \
     rm -rf /tmp/*
 
