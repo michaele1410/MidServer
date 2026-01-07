@@ -68,7 +68,13 @@ RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.51/wrapper-linu
     # Cleanup
     rm -rf /tmp/wrapper /tmp/wrapper.tar.gz
 
-# Give the owner group the same permissions as the owner user.
+# Configure the MID Server to use the system Java installation
+RUN sed -i 's|^wrapper.java.command=.*|wrapper.java.command=/usr/bin/java|' \
+    /opt/snc_mid_server/agent/conf/wrapper.conf
+
+RUN mkdir -p /opt/snc_mid_server/mid_container && \
+    /usr/bin/chmod 2775 /opt/snc_mid_server/mid_container
+    
 # Running this command in this stage reduces the final image size.
 RUN chmod -R g=u /opt/snc_mid_server
 
@@ -93,6 +99,7 @@ RUN dnf update -y --security --bugfix && \
                     procps-ng \
                     diffutils \
                     net-tools && \
+                    java-1.8.0-openjdk-headless && \
     dnf clean all -y && \
     rm -rf /tmp/*
 
