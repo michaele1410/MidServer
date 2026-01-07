@@ -72,6 +72,11 @@ RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.51/wrapper-linu
 RUN sed -i 's|^wrapper.java.command=.*|wrapper.java.command=/usr/bin/java|' \
     /opt/snc_mid_server/agent/conf/wrapper.conf
 
+RUN sed -i 's|^wrapper.java.command=.*|wrapper.java.command=/usr/bin/java|' \
+      /opt/snc_mid_server/agent/conf/wrapper.conf && \
+    sed -i 's|^wrapper.java.command=.*|wrapper.java.command=/usr/bin/java|' \
+      /opt/snc_mid_server/agent/conf/wrapper-override.conf || true
+
 RUN mkdir -p /opt/snc_mid_server/mid_container && \
     /usr/bin/chmod 2775 /opt/snc_mid_server/mid_container
     
