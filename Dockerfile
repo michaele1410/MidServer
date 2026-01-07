@@ -41,6 +41,7 @@ RUN rm /opt/snc_mid_server/* && unzip -d /opt/snc_mid_server/ /tmp/mid.zip && rm
 # Copy only required scripts and .container
 COPY asset/init asset/.container asset/check_health.sh asset/post_start.sh asset/pre_stop.sh asset/calculate_mid_env_hash.sh /opt/snc_mid_server/
 
+
 # Install ARM64 Tanuki Wrapper and patch wrapper.conf
 RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.51/wrapper-linux-arm-64-3.5.51.tar.gz" && \
     echo "Downloading ARM64 wrapper from $WRAPPER_URL" && \
@@ -48,19 +49,19 @@ RUN WRAPPER_URL="https://download.tanukisoftware.com/wrapper/3.5.51/wrapper-linu
     mkdir -p /tmp/wrapper && \
     tar -xzf /tmp/wrapper.tar.gz -C /tmp/wrapper --strip-components=1 && \
     \
-    # Ensure MID directories exist
-    mkdir -p /opt/snc_mid_server/bin && \
-    mkdir -p /opt/snc_mid_server/lib && \
+    # Ensure expected MID directories exist (under agent/)
+    mkdir -p /opt/snc_mid_server/agent/bin && \
+    mkdir -p /opt/snc_mid_server/agent/lib && \
     \
-    # Copy and rename wrapper binary
-    cp /tmp/wrapper/bin/wrapper /opt/snc_mid_server/bin/wrapper-linux-arm-64 && \
-    chmod 755 /opt/snc_mid_server/bin/wrapper-linux-arm-64 && \
+    # Copy and rename wrapper binary into the location mid.sh expects
+    cp /tmp/wrapper/bin/wrapper /opt/snc_mid_server/agent/bin/wrapper-linux-arm-64 && \
+    chmod 755 /opt/snc_mid_server/agent/bin/wrapper-linux-arm-64 && \
     \
-    # Copy and rename shared library
-    cp /tmp/wrapper/lib/libwrapper.so /opt/snc_mid_server/lib/libwrapper-linux-arm-64.so && \
-    chmod 755 /opt/snc_mid_server/lib/libwrapper-linux-arm-64.so && \
+    # Copy and rename shared library into the expected agent/lib path
+    cp /tmp/wrapper/lib/libwrapper.so /opt/snc_mid_server/agent/lib/libwrapper-linux-arm-64.so && \
+    chmod 755 /opt/snc_mid_server/agent/lib/libwrapper-linux-arm-64.so && \
     \
-    # Patch wrapper.conf to use ARM64 wrapper
+    # Patch wrapper.conf to use ARM64 names (paths bleiben relativ zu agent/)
     sed -i 's/wrapper-linux-x86-64/wrapper-linux-arm-64/g' /opt/snc_mid_server/agent/conf/wrapper.conf && \
     sed -i 's/libwrapper-linux-x86-64/libwrapper-linux-arm-64/g' /opt/snc_mid_server/agent/conf/wrapper.conf && \
     \
