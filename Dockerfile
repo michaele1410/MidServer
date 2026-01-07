@@ -90,7 +90,7 @@ RUN chmod -R g=u /opt/snc_mid_server
 
 FROM almalinux:9.2
 
-# Security Updates + Pakete inkl. Java 11
+# Security Updates + Pakete inkl. Java 17
 RUN dnf update -y --security --bugfix && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
     dnf install -y --allowerasing \
@@ -101,7 +101,7 @@ RUN dnf update -y --security --bugfix && \
         procps-ng \
         diffutils \
         net-tools \
-        java-11-openjdk-headless && \
+        java-17-openjdk-headless && \
     dnf clean all -y && \
     rm -rf /tmp/*
 
