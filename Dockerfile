@@ -9,7 +9,7 @@
 FROM eclipse-temurin:8-jdk AS pre_installation
 
 RUN apt-get update -y && \
-    apt-get install -y bash wget unzip && \
+    apt-get install -y bash wget unzip nmap && \
     rm -rf /var/lib/apt/lists/*
 
 ARG MID_INSTALLATION_URL=https://install.service-now.com/glide/distribution/builds/package/app-signed/mid/2025/10/12/mid.zurich-07-01-2025__patch2-09-24-2025_10-12-2025_0904.linux.x86-64.zip
